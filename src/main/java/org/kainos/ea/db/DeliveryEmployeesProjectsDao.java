@@ -15,6 +15,9 @@ public class DeliveryEmployeesProjectsDao {
     public void assignDeliveryEmployees(AssignDeliveryEmployeesRequest request) throws FailedToAssignDeliveryEmployeesException {
 
         try (Connection conn = DatabaseConnector.getConnection()) {
+
+            conn.setAutoCommit(false);
+
             String insertString = "INSERT INTO DeliveryEmployees_Projects VALUES (?, ?)";
 
             for (Integer employeeId : request.getEmployeeIds()) {
@@ -23,6 +26,8 @@ public class DeliveryEmployeesProjectsDao {
                 stmt.setInt(2, request.getProjectId());
                 stmt.execute();
             }
+
+            conn.commit();
 
 
         } catch (SQLException e) {
@@ -33,6 +38,7 @@ public class DeliveryEmployeesProjectsDao {
     public DeliveryEmployeeProject getDeliveryEmployeeProjectById(int deliveryEmployeeId, int projectId) throws FailedToGetDeliveryEmployeeProjectException {
 
         try (Connection conn = DatabaseConnector.getConnection()) {
+
             String queryString = "SELECT EmployeeID, ProjectID FROM DeliveryEmployees_Projects WHERE EmployeeID = ? AND ProjectID = ?";
             PreparedStatement stmt = conn.prepareStatement(queryString);
             stmt.setInt(1, deliveryEmployeeId);
