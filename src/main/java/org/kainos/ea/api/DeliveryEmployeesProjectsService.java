@@ -19,7 +19,7 @@ public class DeliveryEmployeesProjectsService {
 
     public void assignDeliveryEmployees(AssignDeliveryEmployeesRequest request) throws FailedToAssignDeliveryEmployeesException,
             InvalidAssignDeliveryEmployeesRequestException, FailedToGetProjectException, ProjectDoesNotExistException,
-            FailedToGetDeliveryEmployeeProjectException, FailedToGetDeliveryEmployeesException, DeliveryEmployeeDoesNotExistException {
+            FailedToGetDeliveryEmployeeProjectException, FailedToGetDeliveryEmployeesException, DeliveryEmployeeDoesNotExistException, DeliveryEmployeeAlreadyAssignedToProjectException {
 
         String invalidCause = deliveryEmployeeProjectValidator.validateAssignments(request);
         if (invalidCause != null) {
