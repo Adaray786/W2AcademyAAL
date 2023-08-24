@@ -14,8 +14,13 @@ import java.util.List;
 
 public class DeliveryEmployeeService {
 
-    private final DeliveryEmployeeDao deliveryEmployeeDao = new DeliveryEmployeeDao();
-    private final DeliveryEmployeeValidator deliveryEmployeeValidator = new DeliveryEmployeeValidator();
+    private final DeliveryEmployeeDao deliveryEmployeeDao;
+    private final DeliveryEmployeeValidator deliveryEmployeeValidator;
+
+    public DeliveryEmployeeService(DeliveryEmployeeDao deliveryEmployeeDao, DeliveryEmployeeValidator deliveryEmployeeValidator) {
+        this.deliveryEmployeeDao = deliveryEmployeeDao;
+        this.deliveryEmployeeValidator = deliveryEmployeeValidator;
+    }
 
     public List<DeliveryEmployee> getDeliveryEmployees() throws FailedToGetDeliveryEmployeesException {
         try {

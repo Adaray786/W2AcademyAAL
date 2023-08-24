@@ -7,6 +7,8 @@ import org.kainos.ea.client.DeliveryEmployeeDoesNotExistException;
 import org.kainos.ea.client.FailedToCreateDeliveryEmployeeException;
 import org.kainos.ea.client.FailedToGetDeliveryEmployeesException;
 import org.kainos.ea.client.InvalidDeliveryEmployeeException;
+import org.kainos.ea.core.DeliveryEmployeeValidator;
+import org.kainos.ea.db.DeliveryEmployeeDao;
 
 import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
@@ -16,7 +18,10 @@ import javax.ws.rs.core.Response;
 @Path("/api")
 public class DeliveryEmployeeController {
 
-    private final DeliveryEmployeeService deliveryEmployeeService = new DeliveryEmployeeService();
+    private final DeliveryEmployeeService deliveryEmployeeService = new DeliveryEmployeeService(
+            new DeliveryEmployeeDao(),
+            new DeliveryEmployeeValidator()
+    );
 
     @GET
     @Path("/deliveryemployee")
