@@ -1,10 +1,13 @@
 package org.kainos.ea.db;
 
 import org.kainos.ea.cli.AssignDeliveryEmployeesRequest;
+import org.kainos.ea.cli.DeliveryEmployeeProject;
 import org.kainos.ea.client.FailedToAssignDeliveryEmployeesException;
+import org.kainos.ea.client.FailedToGetDeliveryEmployeeProjectException;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
 
 public class DeliveryEmployeesProjectsDao {
@@ -24,6 +27,28 @@ public class DeliveryEmployeesProjectsDao {
 
         } catch (SQLException e) {
             throw new FailedToAssignDeliveryEmployeesException();
+        }
+    }
+
+    public DeliveryEmployeeProject getDeliveryEmployeeProjectById(int deliveryEmployeeId, int projectId) throws FailedToGetDeliveryEmployeeProjectException {
+
+        try (Connection conn = DatabaseConnector.getConnection()) {
+            String queryString = "SELECT EmployeeID, ProjectID FROM DeliveryEmployees_Projects WHERE EmployeeID = ? AND ProjectID = ?";
+            PreparedStatement stmt = conn.prepareStatement(queryString);
+            stmt.setInt(1, deliveryEmployeeId);
+            stmt.setInt(2, projectId);
+
+            ResultSet results = stmt.executeQuery();
+            if (!results.next()) return null;
+
+            return new DeliveryEmployeeProject(
+                    results.getInt("EmployeeID"),
+                    results.getInt("ProjectID")
+            );
+
+
+        } catch (SQLException e) {
+            throw new FailedToGetDeliveryEmployeeProjectException();
         }
     }
 }
