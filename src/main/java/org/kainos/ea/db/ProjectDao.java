@@ -11,9 +11,9 @@ import java.util.List;
 
 public class ProjectDao {
 
-    public List<Project> getProjects() throws FailedToGetProjectException {
+    public List<Project> getProjects() throws SQLException {
 
-        String queryString = "SELECT * FROM Projects";
+        String queryString = "SELECT ProjectID, Name, Value, TechLead, ClientID, StartDate, EndDate FROM Projects";
 
         try (Connection conn = DatabaseConnector.getConnection()) {
 
@@ -25,20 +25,17 @@ public class ProjectDao {
 
             while (results.next()) {
                 projects.add(new Project(
-                    results.getInt("ProjectID"),
-                    results.getString("Name"),
-                    results.getDouble("Value"),
-                    results.getInt("TechLead"),
-                    results.getInt("ClientID"),
-                    results.getDate("StartDate"),
-                    results.getDate("endDate")
+                        results.getInt("ProjectID"),
+                        results.getString("Name"),
+                        results.getDouble("Value"),
+                        results.getInt("TechLead"),
+                        results.getInt("ClientID"),
+                        results.getDate("StartDate"),
+                        results.getDate("EndDate")
                 ));
             }
 
             return projects;
-        } catch (SQLException e) {
-            System.err.println(e.getMessage());
-            throw new FailedToGetProjectException();
         }
     }
 

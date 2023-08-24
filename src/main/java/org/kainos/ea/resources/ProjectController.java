@@ -4,6 +4,7 @@ import io.swagger.annotations.Api;
 import org.kainos.ea.api.ProjectService;
 import org.kainos.ea.cli.ProjectRequest;
 import org.kainos.ea.client.*;
+import org.kainos.ea.core.ProjectValidator;
 import org.kainos.ea.db.ProjectDao;
 
 import javax.ws.rs.*;
@@ -15,7 +16,8 @@ import javax.ws.rs.core.Response;
 public class ProjectController {
 
     private final ProjectService projectService = new ProjectService(
-            new ProjectDao()
+            new ProjectDao(),
+            new ProjectValidator()
     );
 
     @GET
@@ -39,6 +41,8 @@ public class ProjectController {
             System.err.println(e.getMessage());
 
             return Response.serverError().build();
+        } catch (InvalidProjectException e) {
+            return Response.status(Response.Status.BAD_REQUEST).entity(e.getMessage()).build();
         }
     }
 
@@ -56,6 +60,8 @@ public class ProjectController {
             return Response.serverError().build();
         } catch (ProjectDoesNotExistException e) {
             return Response.status(Response.Status.BAD_REQUEST).build();
+        } catch (InvalidProjectException e) {
+            return Response.status(Response.Status.BAD_REQUEST).entity(e.getMessage()).build();
         }
     }
 
