@@ -32,7 +32,7 @@ public class DeliveryEmployeeService {
             DeliveryEmployee deliveryEmployee = deliveryEmployeeDao.getDeliveryEmployeeById(id);
 
             if (deliveryEmployee == null) {
-                throw new DeliveryEmployeeDoesNotExistException();
+                throw new DeliveryEmployeeDoesNotExistException(id);
             }
 
             return deliveryEmployee;
