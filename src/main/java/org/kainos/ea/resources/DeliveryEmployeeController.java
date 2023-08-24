@@ -3,10 +3,7 @@ package org.kainos.ea.resources;
 import io.swagger.annotations.Api;
 import org.kainos.ea.api.DeliveryEmployeeService;
 import org.kainos.ea.cli.DeliveryEmployeeRequest;
-import org.kainos.ea.client.DeliveryEmployeeDoesNotExistException;
-import org.kainos.ea.client.FailedToCreateDeliveryEmployeeException;
-import org.kainos.ea.client.FailedToGetDeliveryEmployeesException;
-import org.kainos.ea.client.InvalidDeliveryEmployeeException;
+import org.kainos.ea.client.*;
 import org.kainos.ea.core.DeliveryEmployeeValidator;
 import org.kainos.ea.db.DeliveryEmployeeDao;
 
@@ -66,4 +63,22 @@ public class DeliveryEmployeeController {
         }
     }
 
+    @PUT
+    @Path("/deliveryemployee/{id}")
+    @Produces(MediaType.APPLICATION_JSON)
+    public Response updateDeliveryEmployee(@PathParam("id") int id, DeliveryEmployeeRequest request) {
+        try {
+            deliveryEmployeeService.updateDeliveryEmployee(id, request);
+
+            return Response.ok().build();
+        } catch (FailedToUpdateDeliveryEmployeeException e) {
+            e.printStackTrace();
+
+            return Response.serverError().build();
+        } catch (InvalidDeliveryEmployeeException | DeliveryEmployeeDoesNotExistException e) {
+            e.printStackTrace();
+
+            return Response.status(Response.Status.BAD_REQUEST).entity(e.getMessage()).build();
+        }
+    }
 }

@@ -111,7 +111,30 @@ public class DeliveryEmployeeDao {
         } catch (SQLException e) {
             c.rollback();
             throw e;
+        } finally {
+            c.setAutoCommit(true);
         }
         return -1;
+    }
+
+    public void updateDeliveryEmployee(int id, DeliveryEmployeeRequest request) throws SQLException {
+        Connection c = databaseConnector.getConnection();
+
+        String query = "UPDATE Employees SET " +
+                "Name = ?," +
+                "Salary = ?," +
+                "BankAccountNumber = ?," +
+                "NationalInsuranceNumber = ?" +
+                "WHERE EmployeeID = ?";
+
+        PreparedStatement statement = c.prepareStatement(query);
+
+        statement.setString(1, request.getName());
+        statement.setDouble(2, request.getSalary());
+        statement.setString(3, request.getBankAccountNumber());
+        statement.setString(4, request.getNiNumber());
+        statement.setInt(5, id);
+
+        statement.executeUpdate();
     }
 }
