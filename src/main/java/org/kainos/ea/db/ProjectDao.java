@@ -12,7 +12,7 @@ public class ProjectDao {
 
     public Project getProjectById(int id) throws FailedToGetProjectException {
 
-        String queryString = "SELECT * FROM Project WHERE ProjectID = ?";
+        String queryString = "SELECT * FROM Projects WHERE ProjectID = ?";
 
         try (Connection conn = DatabaseConnector.getConnection()) {
 
@@ -34,6 +34,7 @@ public class ProjectDao {
             );
 
         } catch (SQLException e) {
+            System.err.println(e.getMessage());
             throw new FailedToGetProjectException();
         }
     }

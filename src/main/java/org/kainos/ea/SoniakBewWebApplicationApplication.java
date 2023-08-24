@@ -5,6 +5,7 @@ import io.dropwizard.setup.Bootstrap;
 import io.dropwizard.setup.Environment;
 import io.federecio.dropwizard.swagger.SwaggerBundle;
 import io.federecio.dropwizard.swagger.SwaggerBundleConfiguration;
+import org.kainos.ea.resources.DeliveryEmployeeController;
 import org.kainos.ea.resources.DeliveryEmployeeProjectController;
 
 public class SoniakBewWebApplicationApplication extends Application<SoniakBewWebApplicationConfiguration> {
@@ -33,10 +34,8 @@ public class SoniakBewWebApplicationApplication extends Application<SoniakBewWeb
     @Override
     public void run(final SoniakBewWebApplicationConfiguration configuration,
                     final Environment environment) {
-        // TODO: implement application
-
+        environment.jersey().register(new DeliveryEmployeeController());
         environment.jersey().register(new DeliveryEmployeeProjectController());
-
     }
 
 }

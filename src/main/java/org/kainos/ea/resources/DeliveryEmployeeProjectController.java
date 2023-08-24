@@ -2,10 +2,12 @@ package org.kainos.ea.resources;
 
 import io.swagger.annotations.Api;
 import org.kainos.ea.api.DeliveryEmployeesProjectsService;
+import org.kainos.ea.api.ProjectService;
 import org.kainos.ea.cli.AssignDeliveryEmployeesRequest;
 import org.kainos.ea.cli.DeliveryEmployee;
 import org.kainos.ea.client.*;
 import org.kainos.ea.core.DeliveryEmployeeProjectValidator;
+import org.kainos.ea.db.DeliveryEmployeeDao;
 import org.kainos.ea.db.DeliveryEmployeesProjectsDao;
 import org.kainos.ea.db.ProjectDao;
 
@@ -20,9 +22,10 @@ import javax.ws.rs.core.Response;
 public class DeliveryEmployeeProjectController {
 
     ProjectDao projectDao = new ProjectDao();
+    ProjectService projectService = new ProjectService(projectDao);
     DeliveryEmployeeDao deliveryEmployeeDao = new DeliveryEmployeeDao();
     DeliveryEmployeesProjectsDao deliveryEmployeesProjectsDao = new DeliveryEmployeesProjectsDao();
-    DeliveryEmployeeProjectValidator deliveryEmployeeProjectValidator = new DeliveryEmployeeProjectValidator(projectDao, deliveryEmployeeDao, deliveryEmployeesProjectsDao);
+    DeliveryEmployeeProjectValidator deliveryEmployeeProjectValidator = new DeliveryEmployeeProjectValidator(projectService, deliveryEmployeeDao, deliveryEmployeesProjectsDao);
     DeliveryEmployeesProjectsService deliveryEmployeesProjectsService = new DeliveryEmployeesProjectsService(
             deliveryEmployeesProjectsDao, deliveryEmployeeProjectValidator);
 
@@ -38,7 +41,8 @@ public class DeliveryEmployeeProjectController {
         } catch (InvalidAssignDeliveryEmployeesRequestException | DeliveryEmployeeDoesNotExistException | ProjectDoesNotExistException e) {
             return Response.status(Response.Status.BAD_REQUEST).entity(e.getMessage()).build();
 
-        } catch (FailedToGetDeliveryEmployeeProjectException | FailedToAssignDeliveryEmployeesException | FailedToGetProjectException | FailedToGetDeliveryEmployeeException e) {
+        } catch (FailedToGetDeliveryEmployeeProjectException | FailedToAssignDeliveryEmployeesException | FailedToGetProjectException | FailedToGetDeliveryEmployeesException e) {
+            System.err.println(e.getMessage());
             return Response.serverError().build();
         }
     }

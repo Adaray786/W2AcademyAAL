@@ -1,5 +1,8 @@
 package org.kainos.ea.cli;
 
+import com.fasterxml.jackson.annotation.JsonCreator;
+import com.fasterxml.jackson.annotation.JsonProperty;
+
 import java.util.List;
 
 public class AssignDeliveryEmployeesRequest {
@@ -7,8 +10,9 @@ public class AssignDeliveryEmployeesRequest {
     private List<Integer> employeeIds;
     private int projectId;
 
-    public AssignDeliveryEmployeesRequest(List<Integer> employeeId, int projectId) {
-        this.employeeIds = employeeId;
+    @JsonCreator
+    public AssignDeliveryEmployeesRequest(@JsonProperty("employeeIds") List<Integer> employeeIds, @JsonProperty("projectId") int projectId) {
+        this.employeeIds = employeeIds;
         this.projectId = projectId;
     }
 

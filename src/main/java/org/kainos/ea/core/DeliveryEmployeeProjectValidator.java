@@ -1,37 +1,41 @@
 package org.kainos.ea.core;
 
+import org.kainos.ea.api.ProjectService;
 import org.kainos.ea.cli.AssignDeliveryEmployeesRequest;
-import org.kainos.ea.cli.DeliveryEmployeeProject;
-import org.kainos.ea.client.FailedToGetDeliveryEmployeeProjectException;
-import org.kainos.ea.client.FailedToGetProjectException;
-import org.kainos.ea.client.ProjectDoesNotExistException;
+import org.kainos.ea.client.*;
+import org.kainos.ea.db.DeliveryEmployeeDao;
 import org.kainos.ea.db.DeliveryEmployeesProjectsDao;
 import org.kainos.ea.db.ProjectDao;
 
+import java.sql.SQLException;
+
 public class DeliveryEmployeeProjectValidator {
 
-    private ProjectDao projectDao;
+    private ProjectService projectService;
     private DeliveryEmployeeDao deliveryEmployeeDao;
     private DeliveryEmployeesProjectsDao deliveryEmployeesProjectsDao;
 
-    public DeliveryEmployeeProjectValidator(ProjectDao projectDao, DeliveryEmployeeDao deliveryEmployeeDao, DeliveryEmployeesProjectsDao deliveryEmployeesProjectsDao) {
-        this.projectDao = projectDao;
+    public DeliveryEmployeeProjectValidator(ProjectService projectService, DeliveryEmployeeDao deliveryEmployeeDao, DeliveryEmployeesProjectsDao deliveryEmployeesProjectsDao) {
+        this.projectService = projectService;
         this.deliveryEmployeeDao = deliveryEmployeeDao;
         this.deliveryEmployeesProjectsDao = deliveryEmployeesProjectsDao;
     }
 
     public String validateAssignments(AssignDeliveryEmployeesRequest request) throws ProjectDoesNotExistException,
             FailedToGetProjectException, FailedToGetDeliveryEmployeeProjectException,
-            FailedToGetDeliveryEmployeeException {
+            FailedToGetDeliveryEmployeesException, DeliveryEmployeeDoesNotExistException {
 
-        if (projectDao.getProjectById(request.getProjectId()) == null) {
-            throw new ProjectDoesNotExistException();
-        }
+        // Will throw exception if project does not exist.
+        projectService.getProjectById(request.getProjectId());
 
 
         for (Integer deliveryEmployeeId : request.getEmployeeIds()) {
-            if (deliveryEmployeeDao.getDeliveryEmployeeById == null) {
-                throw new DeliveryEmployeeDoesNotExistException();
+            try {
+                if (deliveryEmployeeDao.getDeliveryEmployeeById(deliveryEmployeeId) == null) {
+                    throw new DeliveryEmployeeDoesNotExistException(deliveryEmployeeId);
+                }
+            } catch (SQLException e) {
+                throw new FailedToGetDeliveryEmployeesException();
             }
 
             if (deliveryEmployeesProjectsDao.getDeliveryEmployeeProjectById(deliveryEmployeeId,
