@@ -1,11 +1,11 @@
 package org.kainos.ea.cli;
 
-public class AssignDeliveryEmployeeRequest {
+public class DeliveryEmployeeProject {
 
     private int employeeId;
     private int projectId;
 
-    public AssignDeliveryEmployeeRequest(int employeeId, int projectId) {
+    public AssignDeliveryEmployeesRequest(int employeeId, int projectId) {
         this.employeeId = employeeId;
         this.projectId = projectId;
     }
