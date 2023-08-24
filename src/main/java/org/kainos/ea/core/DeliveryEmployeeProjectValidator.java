@@ -23,13 +23,13 @@ public class DeliveryEmployeeProjectValidator {
 
     public String validateAssignments(AssignDeliveryEmployeesRequest request) throws ProjectDoesNotExistException,
             FailedToGetProjectException, FailedToGetDeliveryEmployeeProjectException,
-            FailedToGetDeliveryEmployeesException, DeliveryEmployeeDoesNotExistException {
+            FailedToGetDeliveryEmployeesException, DeliveryEmployeeDoesNotExistException, DeliveryEmployeeAlreadyAssignedToProjectException {
 
         // Will throw exception if project does not exist.
         projectService.getProjectById(request.getProjectId());
 
 
-        for (Integer deliveryEmployeeId : request.getEmployeeIds()) {
+        for (int deliveryEmployeeId : request.getEmployeeIds()) {
             try {
                 if (deliveryEmployeeDao.getDeliveryEmployeeById(deliveryEmployeeId) == null) {
                     throw new DeliveryEmployeeDoesNotExistException(deliveryEmployeeId);
@@ -40,7 +40,7 @@ public class DeliveryEmployeeProjectValidator {
 
             if (deliveryEmployeesProjectsDao.getDeliveryEmployeeProjectById(deliveryEmployeeId,
                     request.getProjectId()) != null) {
-                return "One of the employees is already assigned to the project";
+                throw new DeliveryEmployeeAlreadyAssignedToProjectException();
             }
         }
 
