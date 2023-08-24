@@ -1,6 +1,7 @@
 package org.kainos.ea.api;
 
 
+import org.kainos.ea.cli.DeliveryEmployee;
 import org.kainos.ea.cli.SalesEmployee;
 import org.kainos.ea.cli.SalesEmployeeRequest;
 import org.kainos.ea.client.*;
@@ -83,6 +84,22 @@ public class SalesEmployeeService {
             e.printStackTrace();
 
             throw new FailedToUpdateSalesEmployeeException();
+        }
+    }
+
+    public void deleteSalesEmployee(int id) throws FailedToDeleteSalesEmployeeException, SalesEmployeeDoesNotExistException {
+        try {
+            SalesEmployee salesEmployeeToDelete = salesEmployeeDao.getSalesEmployeeById(id);
+
+            if (salesEmployeeToDelete == null) {
+                throw new SalesEmployeeDoesNotExistException(id);
+            }
+
+            salesEmployeeDao.deleteSalesEmployee(id);
+        } catch (SQLException e) {
+            e.printStackTrace();
+
+            throw new FailedToDeleteSalesEmployeeException();
         }
     }
 }
