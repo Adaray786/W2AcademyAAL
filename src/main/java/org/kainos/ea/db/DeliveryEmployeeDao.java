@@ -137,4 +137,33 @@ public class DeliveryEmployeeDao {
 
         statement.executeUpdate();
     }
+
+    public void deleteDeliveryEmployee(int id) throws SQLException {
+        Connection c = databaseConnector.getConnection();
+
+        try {
+            c.setAutoCommit(false);
+
+            String deleteFromEmployeesQuery =
+                    "DELETE FROM Employees WHERE EmployeeID = ?";
+            String deleteFromDeliveryEmployeesQuery =
+                    "DELETE FROM DeliveryEmployees WHERE EmployeeID = ?";
+
+            PreparedStatement deleteFromEmployees = c.prepareStatement(deleteFromEmployeesQuery);
+            PreparedStatement deleteFromDeliveryEmployees = c.prepareStatement(deleteFromDeliveryEmployeesQuery);
+
+            deleteFromEmployees.setInt(1, id);
+            deleteFromDeliveryEmployees.setInt(1, id);
+
+            deleteFromDeliveryEmployees.executeUpdate();
+            deleteFromEmployees.executeUpdate();
+
+            c.commit();
+        } catch (SQLException e) {
+            c.rollback();
+            throw e;
+        } finally {
+            c.setAutoCommit(true);
+        }
+    }
 }
