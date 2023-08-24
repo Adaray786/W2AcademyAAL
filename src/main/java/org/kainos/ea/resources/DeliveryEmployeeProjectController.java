@@ -11,6 +11,7 @@ import org.kainos.ea.db.DeliveryEmployeeDao;
 import org.kainos.ea.db.DeliveryEmployeesProjectsDao;
 import org.kainos.ea.db.ProjectDao;
 
+import javax.ws.rs.DELETE;
 import javax.ws.rs.POST;
 import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
@@ -42,6 +43,24 @@ public class DeliveryEmployeeProjectController {
             return Response.status(Response.Status.BAD_REQUEST).entity(e.getMessage()).build();
 
         } catch (FailedToGetDeliveryEmployeeProjectException | FailedToAssignDeliveryEmployeesException | FailedToGetProjectException | FailedToGetDeliveryEmployeesException e) {
+            System.err.println(e.getMessage());
+            return Response.serverError().build();
+        }
+    }
+
+    @DELETE
+    @Path("/deliveryEmployeeProject")
+    @Produces(MediaType.APPLICATION_JSON)
+    public Response removeDeliveryEmployeeProjectAssignment(int deliveryEmployeeId, int projectId) {
+
+        try {
+            deliveryEmployeesProjectsService.removeDeliveryEmployeeProject(deliveryEmployeeId, projectId);
+            return Response.ok().build();
+
+        } catch (DeliveryEmployeeProjectAssignmentDoesNotExistException e) {
+            return Response.status(Response.Status.BAD_REQUEST).entity(e.getMessage()).build();
+
+        } catch (FailedToGetDeliveryEmployeeProjectException | FailedToRemoveDeliveryEmployeeProjectException e) {
             System.err.println(e.getMessage());
             return Response.serverError().build();
         }
