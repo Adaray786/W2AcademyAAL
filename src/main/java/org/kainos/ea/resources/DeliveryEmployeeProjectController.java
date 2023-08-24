@@ -3,7 +3,11 @@ package org.kainos.ea.resources;
 import io.swagger.annotations.Api;
 import org.kainos.ea.api.DeliveryEmployeesProjectsService;
 import org.kainos.ea.cli.AssignDeliveryEmployeesRequest;
+import org.kainos.ea.cli.DeliveryEmployee;
 import org.kainos.ea.client.*;
+import org.kainos.ea.core.DeliveryEmployeeProjectValidator;
+import org.kainos.ea.db.DeliveryEmployeesProjectsDao;
+import org.kainos.ea.db.ProjectDao;
 
 import javax.ws.rs.POST;
 import javax.ws.rs.Path;
@@ -15,7 +19,12 @@ import javax.ws.rs.core.Response;
 @Api("Delivery Employee Project Assignment API")
 public class DeliveryEmployeeProjectController {
 
-    DeliveryEmployeesProjectsService deliveryEmployeesProjectsService = new DeliveryEmployeesProjectsService();
+    ProjectDao projectDao = new ProjectDao();
+    DeliveryEmployeeDao deliveryEmployeeDao = new DeliveryEmployeeDao();
+    DeliveryEmployeesProjectsDao deliveryEmployeesProjectsDao = new DeliveryEmployeesProjectsDao();
+    DeliveryEmployeeProjectValidator deliveryEmployeeProjectValidator = new DeliveryEmployeeProjectValidator(projectDao, deliveryEmployeeDao, deliveryEmployeesProjectsDao);
+    DeliveryEmployeesProjectsService deliveryEmployeesProjectsService = new DeliveryEmployeesProjectsService(
+            deliveryEmployeesProjectsDao, deliveryEmployeeProjectValidator);
 
     @POST
     @Path("/deliveryEmployeeProject")

@@ -10,9 +10,15 @@ import org.kainos.ea.db.ProjectDao;
 
 public class DeliveryEmployeeProjectValidator {
 
-    private ProjectDao projectDao = new ProjectDao();
-    private DeliveryEmployeeDao deliveryEmployeeDao = new DeliveryEmployeeDao();
-    private DeliveryEmployeesProjectsDao deliveryEmployeesProjectsDao = new DeliveryEmployeesProjectsDao();
+    private ProjectDao projectDao;
+    private DeliveryEmployeeDao deliveryEmployeeDao;
+    private DeliveryEmployeesProjectsDao deliveryEmployeesProjectsDao;
+
+    public DeliveryEmployeeProjectValidator(ProjectDao projectDao, DeliveryEmployeeDao deliveryEmployeeDao, DeliveryEmployeesProjectsDao deliveryEmployeesProjectsDao) {
+        this.projectDao = projectDao;
+        this.deliveryEmployeeDao = deliveryEmployeeDao;
+        this.deliveryEmployeesProjectsDao = deliveryEmployeesProjectsDao;
+    }
 
     public String validateAssignments(AssignDeliveryEmployeesRequest request) throws ProjectDoesNotExistException,
             FailedToGetProjectException, FailedToGetDeliveryEmployeeProjectException,

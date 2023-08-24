@@ -1,17 +1,21 @@
 package org.kainos.ea.api;
 
 import org.kainos.ea.cli.AssignDeliveryEmployeesRequest;
-import org.kainos.ea.client.FailedToAssignDeliveryEmployeesException;
-import org.kainos.ea.client.InvalidAssignDeliveryEmployeesRequestException;
+import org.kainos.ea.client.*;
 import org.kainos.ea.core.DeliveryEmployeeProjectValidator;
 import org.kainos.ea.db.DeliveryEmployeesProjectsDao;
 
 public class DeliveryEmployeesProjectsService {
 
-    private final DeliveryEmployeesProjectsDao deliveryEmployeesProjectsDao = new DeliveryEmployeesProjectsDao();
-    private final DeliveryEmployeeProjectValidator deliveryEmployeeProjectValidator = new DeliveryEmployeeProjectValidator();
+    private final DeliveryEmployeesProjectsDao deliveryEmployeesProjectsDao;
+    private final DeliveryEmployeeProjectValidator deliveryEmployeeProjectValidator;
 
-    public void assignDeliveryEmployees(AssignDeliveryEmployeesRequest request) throws FailedToAssignDeliveryEmployeesException, InvalidAssignDeliveryEmployeesRequestException {
+    public DeliveryEmployeesProjectsService(DeliveryEmployeesProjectsDao deliveryEmployeesProjectsDao, DeliveryEmployeeProjectValidator deliveryEmployeeProjectValidator) {
+        this.deliveryEmployeesProjectsDao = deliveryEmployeesProjectsDao;
+        this.deliveryEmployeeProjectValidator = deliveryEmployeeProjectValidator;
+    }
+
+    public void assignDeliveryEmployees(AssignDeliveryEmployeesRequest request) throws FailedToAssignDeliveryEmployeesException, InvalidAssignDeliveryEmployeesRequestException, FailedToGetProjectException, ProjectDoesNotExistException, FailedToGetDeliveryEmployeeProjectException {
 
         String invalidCause = deliveryEmployeeProjectValidator.validateAssignments(request);
         if (invalidCause != null) {
