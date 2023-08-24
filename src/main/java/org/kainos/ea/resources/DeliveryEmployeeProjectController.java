@@ -7,6 +7,7 @@ import org.kainos.ea.cli.AssignDeliveryEmployeesRequest;
 import org.kainos.ea.cli.DeliveryEmployee;
 import org.kainos.ea.client.*;
 import org.kainos.ea.core.DeliveryEmployeeProjectValidator;
+import org.kainos.ea.core.ProjectValidator;
 import org.kainos.ea.db.DeliveryEmployeeDao;
 import org.kainos.ea.db.DeliveryEmployeesProjectsDao;
 import org.kainos.ea.db.ProjectDao;
@@ -20,7 +21,8 @@ import javax.ws.rs.core.Response;
 public class DeliveryEmployeeProjectController {
 
     ProjectDao projectDao = new ProjectDao();
-    ProjectService projectService = new ProjectService(projectDao);
+    ProjectValidator projectValidator = new ProjectValidator();
+    ProjectService projectService = new ProjectService(projectDao, projectValidator);
     DeliveryEmployeeDao deliveryEmployeeDao = new DeliveryEmployeeDao();
     DeliveryEmployeesProjectsDao deliveryEmployeesProjectsDao = new DeliveryEmployeesProjectsDao();
     DeliveryEmployeeProjectValidator deliveryEmployeeProjectValidator = new DeliveryEmployeeProjectValidator(projectService, deliveryEmployeeDao, deliveryEmployeesProjectsDao);

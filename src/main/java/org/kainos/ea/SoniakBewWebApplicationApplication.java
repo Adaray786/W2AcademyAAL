@@ -5,8 +5,10 @@ import io.dropwizard.setup.Bootstrap;
 import io.dropwizard.setup.Environment;
 import io.federecio.dropwizard.swagger.SwaggerBundle;
 import io.federecio.dropwizard.swagger.SwaggerBundleConfiguration;
+import org.kainos.ea.client.FailedToGetProjectException;
 import org.kainos.ea.resources.DeliveryEmployeeController;
 import org.kainos.ea.resources.DeliveryEmployeeProjectController;
+import org.kainos.ea.resources.ProjectController;
 import org.kainos.ea.resources.SalesEmployeeController;
 
 public class SoniakBewWebApplicationApplication extends Application<SoniakBewWebApplicationConfiguration> {
@@ -37,6 +39,7 @@ public class SoniakBewWebApplicationApplication extends Application<SoniakBewWeb
                     final Environment environment) {
         environment.jersey().register(new DeliveryEmployeeController());
         environment.jersey().register(new DeliveryEmployeeProjectController());
+        environment.jersey().register(new ProjectController());
         environment.jersey().register(new SalesEmployeeController());
     }
 
