@@ -11,10 +11,7 @@ import org.kainos.ea.db.DeliveryEmployeeDao;
 import org.kainos.ea.db.DeliveryEmployeesProjectsDao;
 import org.kainos.ea.db.ProjectDao;
 
-import javax.ws.rs.DELETE;
-import javax.ws.rs.POST;
-import javax.ws.rs.Path;
-import javax.ws.rs.Produces;
+import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 
@@ -49,9 +46,9 @@ public class DeliveryEmployeeProjectController {
     }
 
     @DELETE
-    @Path("/deliveryEmployeeProject")
+    @Path("/deliveryEmployeeProject/{projectId}/employee/{deliveryEmployeeId}")
     @Produces(MediaType.APPLICATION_JSON)
-    public Response removeDeliveryEmployeeProjectAssignment(int deliveryEmployeeId, int projectId) {
+    public Response removeDeliveryEmployeeProjectAssignment(@PathParam("deliveryEmployeeId") int deliveryEmployeeId, @PathParam("projectId") int projectId) {
 
         try {
             deliveryEmployeesProjectsService.removeDeliveryEmployeeProject(deliveryEmployeeId, projectId);
