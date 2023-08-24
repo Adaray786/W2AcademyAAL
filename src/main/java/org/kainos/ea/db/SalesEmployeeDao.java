@@ -64,9 +64,6 @@ public class SalesEmployeeDao {
 
     public int createSalesEmployee(SalesEmployeeRequest request) throws SQLException {
         Connection c = databaseConnector.getConnection();
-        if (c == null) {
-            System.out.println("Connection not working");
-        }
 
         try {
             c.setAutoCommit(false);

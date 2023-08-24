@@ -20,13 +20,11 @@ public class SalesEmployeeService {
     }
 
     public List<SalesEmployee> getAllSalesEmployees() throws FailedToGetSalesEmployeesException {
-        List<SalesEmployee> salesEmployeeList = null;
         try {
-            salesEmployeeList = salesEmployeeDao.getAllSalesEmployees();
+            return salesEmployeeDao.getAllSalesEmployees();
         } catch (SQLException e) {
             throw new FailedToGetSalesEmployeesException();
         }
-        return salesEmployeeList;
     }
 
     public SalesEmployee getSalesEmployeeById(int id) throws FailedToGetSalesEmployeeException, SalesEmployeeDoesNotExistException {
