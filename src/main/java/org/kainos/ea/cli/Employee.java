@@ -2,12 +2,14 @@ package org.kainos.ea.cli;
 
 public class Employee {
     private int employeeID;
+    private String name;
     private double salary;
     private String bankAccountNumber;
     private String niNumber;
 
-    public Employee(int employeeID, double salary, String bankAccountNumber, String niNumber) {
+    public Employee(int employeeID, String name, double salary, String bankAccountNumber, String niNumber) {
         this.employeeID = employeeID;
+        this.name = name;
         this.salary = salary;
         this.bankAccountNumber = bankAccountNumber;
         this.niNumber = niNumber;
@@ -19,6 +21,14 @@ public class Employee {
 
     public void setEmployeeID(int employeeID) {
         this.employeeID = employeeID;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
     }
 
     public double getSalary() {
