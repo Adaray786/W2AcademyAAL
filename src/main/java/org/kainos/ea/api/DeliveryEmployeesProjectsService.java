@@ -10,12 +10,15 @@ public class DeliveryEmployeesProjectsService {
     private final DeliveryEmployeesProjectsDao deliveryEmployeesProjectsDao;
     private final DeliveryEmployeeProjectValidator deliveryEmployeeProjectValidator;
 
-    public DeliveryEmployeesProjectsService(DeliveryEmployeesProjectsDao deliveryEmployeesProjectsDao, DeliveryEmployeeProjectValidator deliveryEmployeeProjectValidator) {
+    public DeliveryEmployeesProjectsService(DeliveryEmployeesProjectsDao deliveryEmployeesProjectsDao,
+                                            DeliveryEmployeeProjectValidator deliveryEmployeeProjectValidator) {
         this.deliveryEmployeesProjectsDao = deliveryEmployeesProjectsDao;
         this.deliveryEmployeeProjectValidator = deliveryEmployeeProjectValidator;
     }
 
-    public void assignDeliveryEmployees(AssignDeliveryEmployeesRequest request) throws FailedToAssignDeliveryEmployeesException, InvalidAssignDeliveryEmployeesRequestException, FailedToGetProjectException, ProjectDoesNotExistException, FailedToGetDeliveryEmployeeProjectException {
+    public void assignDeliveryEmployees(AssignDeliveryEmployeesRequest request) throws FailedToAssignDeliveryEmployeesException,
+            InvalidAssignDeliveryEmployeesRequestException, FailedToGetProjectException, ProjectDoesNotExistException,
+            FailedToGetDeliveryEmployeeProjectException, FailedToGetDeliveryEmployeesException, DeliveryEmployeeDoesNotExistException {
 
         String invalidCause = deliveryEmployeeProjectValidator.validateAssignments(request);
         if (invalidCause != null) {
