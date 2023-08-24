@@ -20,7 +20,7 @@ public class DeliveryEmployeesProjectsDao {
 
             String insertString = "INSERT INTO DeliveryEmployees_Projects VALUES (?, ?)";
 
-            for (Integer employeeId : request.getEmployeeIds()) {
+            for (int employeeId : request.getEmployeeIds()) {
                 PreparedStatement stmt = conn.prepareStatement(insertString);
                 stmt.setInt(1, employeeId);
                 stmt.setInt(2, request.getProjectId());

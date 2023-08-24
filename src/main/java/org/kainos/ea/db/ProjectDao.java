@@ -12,7 +12,8 @@ public class ProjectDao {
 
     public Project getProjectById(int id) throws FailedToGetProjectException {
 
-        String queryString = "SELECT * FROM Projects WHERE ProjectID = ?";
+        String queryString = "SELECT ProjectID, Name, Value, TechLead, ClientID, StartDate, EndDate FROM Projects" +
+                " WHERE ProjectID = ?";
 
         try (Connection conn = DatabaseConnector.getConnection()) {
 
@@ -30,7 +31,7 @@ public class ProjectDao {
                     results.getInt("TechLead"),
                     results.getInt("ClientID"),
                     results.getDate("StartDate"),
-                    results.getDate("endDate")
+                    results.getDate("EndDate")
             );
 
         } catch (SQLException e) {

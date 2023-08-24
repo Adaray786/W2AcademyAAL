@@ -38,7 +38,7 @@ public class DeliveryEmployeeProjectController {
             deliveryEmployeesProjectsService.assignDeliveryEmployees(request);
             return Response.ok().build();
 
-        } catch (InvalidAssignDeliveryEmployeesRequestException | DeliveryEmployeeDoesNotExistException | ProjectDoesNotExistException e) {
+        } catch (InvalidAssignDeliveryEmployeesRequestException | DeliveryEmployeeDoesNotExistException | ProjectDoesNotExistException | DeliveryEmployeeAlreadyAssignedToProjectException e) {
             return Response.status(Response.Status.BAD_REQUEST).entity(e.getMessage()).build();
 
         } catch (FailedToGetDeliveryEmployeeProjectException | FailedToAssignDeliveryEmployeesException | FailedToGetProjectException | FailedToGetDeliveryEmployeesException e) {
