@@ -36,6 +36,33 @@ public class DeliveryEmployeeDao {
         return deliveryEmployees;
     }
 
+    public DeliveryEmployee getDeliveryEmployeeById(int id) throws SQLException {
+        Connection c = databaseConnector.getConnection();
+
+        String query = "SELECT EmployeeID, Name, Salary, BankAccountNumber, NationalInsuranceNumber " +
+                "FROM DeliveryEmployees " +
+                "LEFT JOIN Employees USING (EmployeeID) " +
+                "WHERE EmployeeID = ?";
+
+        PreparedStatement st = c.prepareStatement(query);
+
+        st.setInt(1, id);
+
+        ResultSet rs = st.executeQuery();
+
+        if (rs.next()) {
+            return new DeliveryEmployee(
+                    rs.getInt(1),
+                    rs.getString(2),
+                    rs.getDouble(3),
+                    rs.getString(4),
+                    rs.getString(5)
+            );
+        }
+
+        return null;
+    }
+
     public int createDeliveryEmployee(DeliveryEmployeeRequest request) throws SQLException {
         Connection c = databaseConnector.getConnection();
 
