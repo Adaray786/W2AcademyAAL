@@ -1,31 +1,47 @@
 package org.kainos.ea.cli;
 
 public class Employee {
-    private int EmployeeID;
+    private int employeeID;
     private double salary;
-    private String BankAccountNumber;
-    private String NINumber;
+    private String bankAccountNumber;
+    private String niNumber;
 
-    public Employee(int employeeID, double salary, String bankAccountNumber, String NINumber) {
-        setEmployeeID(employeeID);
-        setSalary(salary);
-        setNINumber(NINumber);
-        setBankAccountNumber(bankAccountNumber);
+    public Employee(int employeeID, double salary, String bankAccountNumber, String niNumber) {
+        this.employeeID = employeeID;
+        this.salary = salary;
+        this.bankAccountNumber = bankAccountNumber;
+        this.niNumber = niNumber;
     }
 
-    public int getEmployeeID() {return EmployeeID;}
+    public int getEmployeeID() {
+        return employeeID;
+    }
 
-    public void setEmployeeID(int employeeID) {EmployeeID = employeeID;}
+    public void setEmployeeID(int employeeID) {
+        this.employeeID = employeeID;
+    }
 
-    public double getSalary() {return salary;}
+    public double getSalary() {
+        return salary;
+    }
 
-    public void setSalary(double salary) {this.salary = salary;}
+    public void setSalary(double salary) {
+        this.salary = salary;
+    }
 
-    public String getBankAccountNumber() {return BankAccountNumber;}
+    public String getBankAccountNumber() {
+        return bankAccountNumber;
+    }
 
-    public void setBankAccountNumber(String bankAccountNumber) {BankAccountNumber = bankAccountNumber;}
+    public void setBankAccountNumber(String bankAccountNumber) {
+        this.bankAccountNumber = bankAccountNumber;
+    }
 
-    public String getNINumber() {return NINumber;}
+    public String getNiNumber() {
+        return niNumber;
+    }
 
-    public void setNINumber(String NINumber) {this.NINumber = NINumber;}
+    public void setNiNumber(String niNumber) {
+        this.niNumber = niNumber;
+    }
 }
