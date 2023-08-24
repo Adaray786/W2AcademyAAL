@@ -5,6 +5,8 @@ import io.swagger.annotations.Api;
 import org.kainos.ea.api.SalesEmployeeService;
 import org.kainos.ea.cli.SalesEmployeeRequest;
 import org.kainos.ea.client.*;
+import org.kainos.ea.core.SalesEmployeeValidator;
+import org.kainos.ea.db.SalesEmployeeDao;
 
 import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
@@ -14,7 +16,10 @@ import java.sql.SQLException;
 @Api("Sales Employee API")
 @Path("/api")
 public class SalesEmployeeController {
-    SalesEmployeeService salesEmployeeService = new SalesEmployeeService();
+    SalesEmployeeService salesEmployeeService = new SalesEmployeeService(
+            new SalesEmployeeDao(),
+            new SalesEmployeeValidator()
+    );
 
     @GET
     @Path("/salesemployee")

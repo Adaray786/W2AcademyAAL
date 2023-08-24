@@ -11,14 +11,19 @@ import java.sql.SQLException;
 import java.util.List;
 
 public class SalesEmployeeService {
-    private SalesEmployeeDao salesEmployeeDao = new SalesEmployeeDao();
-    private SalesEmployeeValidator salesEmployeeValidator = new SalesEmployeeValidator();
+    private final SalesEmployeeValidator salesEmployeeValidator;
+    private final SalesEmployeeDao salesEmployeeDao;
+
+    public SalesEmployeeService(SalesEmployeeDao salesEmployeeDao, SalesEmployeeValidator salesEmployeeValidator) {
+        this.salesEmployeeDao = salesEmployeeDao;
+        this.salesEmployeeValidator = salesEmployeeValidator;
+    }
+
     public List<SalesEmployee> getAllSalesEmployees() throws FailedToGetSalesEmployeesException {
         List<SalesEmployee> salesEmployeeList = null;
         try {
             salesEmployeeList = salesEmployeeDao.getAllSalesEmployees();
         } catch (SQLException e) {
-            e.printStackTrace();
             throw new FailedToGetSalesEmployeesException();
         }
         return salesEmployeeList;
