@@ -115,4 +115,36 @@ public class SalesEmployeeDao {
         }
         return -1;
         }
+
+    public void updateSalesEmployee(int id, SalesEmployeeRequest request) throws SQLException {
+        Connection c = databaseConnector.getConnection();
+
+        String query = "UPDATE Employees SET " +
+                "Name = ?," +
+                "Salary = ?," +
+                "BankAccountNumber = ?," +
+                "NationalInsuranceNumber = ?" +
+                "WHERE EmployeeID = ?";
+
+        PreparedStatement statement = c.prepareStatement(query);
+
+        statement.setString(1, request.getName());
+        statement.setDouble(2, request.getSalary());
+        statement.setString(3, request.getBankAccountNumber());
+        statement.setString(4, request.getNiNumber());
+        statement.setInt(5, id);
+
+        statement.executeUpdate();
+
+        String query2 = "UPDATE SalesEmployees SET " +
+                "CommissionRate = ?" +
+                "WHERE EmployeeID = ?";
+
+        PreparedStatement statement2 = c.prepareStatement(query2);
+
+        statement2.setDouble(1, request.getCommissionRate());
+        statement2.setInt(2, id);
+
+        statement2.executeUpdate();
+    }
     }

@@ -32,7 +32,7 @@ public class SalesEmployeeService {
             SalesEmployee salesEmployee = salesEmployeeDao.getSalesEmployeeById(id);
 
             if (salesEmployee == null) {
-                throw new SalesEmployeeDoesNotExistException();
+                throw new SalesEmployeeDoesNotExistException(id);
             }
 
             return salesEmployee;
@@ -61,6 +61,28 @@ public class SalesEmployeeService {
             System.err.println(e.getMessage());
 
             throw new FailedToCreateSalesEmployeeException();
+        }
+    }
+
+    public void updateSalesEmployee(int id, SalesEmployeeRequest request) throws InvalidSalesEmployeeException, FailedToUpdateSalesEmployeeException, SalesEmployeeDoesNotExistException {
+        try {
+            String validation = salesEmployeeValidator.isValidSalesEmployee(request);
+
+            if (validation != null) {
+                throw new InvalidSalesEmployeeException(validation);
+            }
+
+            SalesEmployee salesEmployeeToUpdate = salesEmployeeDao.getSalesEmployeeById(id);
+
+            if (salesEmployeeToUpdate == null) {
+                throw new SalesEmployeeDoesNotExistException(id);
+            }
+
+            salesEmployeeDao.updateSalesEmployee(id, request);
+        } catch (SQLException e) {
+            e.printStackTrace();
+
+            throw new FailedToUpdateSalesEmployeeException();
         }
     }
 }
