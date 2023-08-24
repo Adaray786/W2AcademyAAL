@@ -1,7 +1,7 @@
 package org.kainos.ea.cli;
 
 public class SalesEmployee extends Employee{
-    public SalesEmployee(int employeeID, double salary, String bankAccountNumber, String niNumber, float comissionRate, int salesEmployeeID) {
+    public SalesEmployee(int employeeID, double salary, String bankAccountNumber, String niNumber, float comissionRate) {
         super(employeeID, salary, bankAccountNumber, niNumber);
         setComissionRate(comissionRate);
     }
