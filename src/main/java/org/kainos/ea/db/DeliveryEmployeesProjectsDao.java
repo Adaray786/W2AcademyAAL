@@ -4,6 +4,7 @@ import org.kainos.ea.cli.AssignDeliveryEmployeesRequest;
 import org.kainos.ea.cli.DeliveryEmployeeProject;
 import org.kainos.ea.client.FailedToAssignDeliveryEmployeesException;
 import org.kainos.ea.client.FailedToGetDeliveryEmployeeProjectException;
+import org.kainos.ea.client.FailedToRemoveDeliveryEmployeeProjectException;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -55,6 +56,23 @@ public class DeliveryEmployeesProjectsDao {
 
         } catch (SQLException e) {
             throw new FailedToGetDeliveryEmployeeProjectException();
+        }
+    }
+
+    public void removeDeliveryEmployeeProject(int deliveryEmployeeId, int projectId) throws FailedToRemoveDeliveryEmployeeProjectException {
+
+        try (Connection conn = DatabaseConnector.getConnection()) {
+
+            String queryString = "DELETE FROM DeliveryEmployees_Projects WHERE EmployeeID = ? AND ProjectID = ?";
+            PreparedStatement stmt = conn.prepareStatement(queryString);
+            stmt.setInt(1, deliveryEmployeeId);
+            stmt.setInt(2, projectId);
+
+            stmt.execute();
+
+        } catch (SQLException e) {
+            System.err.println(e.getMessage());
+            throw new FailedToRemoveDeliveryEmployeeProjectException();
         }
     }
 }
