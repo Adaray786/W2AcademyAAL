@@ -18,6 +18,7 @@ public class SalesEmployeeService {
         try {
             salesEmployeeList = salesEmployeeDao.getAllSalesEmployees();
         } catch (SQLException e) {
+            e.printStackTrace();
             throw new FailedToGetSalesEmployeesException();
         }
         return salesEmployeeList;

@@ -15,8 +15,8 @@ public class SalesEmployeeDao {
 
         Statement st = c.createStatement();
 
-        ResultSet rs = st.executeQuery("SELECT EmployeeID Name, Salary, BankAccountNumber, NationalInsuranceNumber, ComissionRate " +
-                "FROM SalesEmployees" +
+        ResultSet rs = st.executeQuery("SELECT EmployeeID, Name, Salary, BankAccountNumber, NationalInsuranceNumber, CommissionRate " +
+                "FROM SalesEmployees " +
                 "LEFT JOIN Employees USING (EmployeeID)");
 
         List<SalesEmployee> SalesEmployeeList = new ArrayList<>();
@@ -45,6 +45,8 @@ public class SalesEmployeeDao {
 
         PreparedStatement st = c.prepareStatement(selectStatement);
 
+        st.setInt(1, id);
+
         ResultSet rs = st.executeQuery();
 
         while(rs.next()) {
@@ -54,7 +56,7 @@ public class SalesEmployeeDao {
                     rs.getDouble("Salary"),
                     rs.getString("BankAccountNumber"),
                     rs.getString("NationalInsuranceNumber"),
-                    rs.getFloat("ComissionRate")
+                    rs.getFloat("CommissionRate")
             );
         }
         return null;
@@ -92,7 +94,7 @@ public class SalesEmployeeDao {
                 return -1;
             }
 
-            String insertSalesEmployeesQuery = "INSERT INTO SalesEmployees (EmployeeID) " +
+            String insertSalesEmployeesQuery = "INSERT INTO SalesEmployees (EmployeeID, CommissionRate) " +
                     "VALUES (?,?)";
 
             PreparedStatement insertSalesEmployees = c.prepareStatement(insertSalesEmployeesQuery, Statement.RETURN_GENERATED_KEYS);
@@ -117,4 +119,3 @@ public class SalesEmployeeDao {
         return -1;
         }
     }
-}

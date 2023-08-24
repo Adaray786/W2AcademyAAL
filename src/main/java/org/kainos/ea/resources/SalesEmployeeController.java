@@ -17,7 +17,7 @@ public class SalesEmployeeController {
     SalesEmployeeService salesEmployeeService = new SalesEmployeeService();
 
     @GET
-    @Path("/salesEmployee")
+    @Path("/salesemployee")
     @Produces(MediaType.APPLICATION_JSON)
     public Response getAllSalesEmployees() {
         try {
@@ -30,7 +30,7 @@ public class SalesEmployeeController {
     }
 
     @GET
-    @Path("/salesEmployee/{id}")
+    @Path("/salesemployee/{id}")
     @Produces(MediaType.APPLICATION_JSON)
     public Response getSalesEmployeeById(@PathParam("id") int id) {
         try {
@@ -47,7 +47,7 @@ public class SalesEmployeeController {
     }
 
     @POST
-    @Path("/salesEmployee")
+    @Path("/salesemployee")
     @Produces(MediaType.APPLICATION_JSON)
     public Response createSalesEmployee(SalesEmployeeRequest salesEmployeeRequest) {
         try {
