@@ -5,7 +5,7 @@ public class DeliveryEmployeeProject {
     private int employeeId;
     private int projectId;
 
-    public AssignDeliveryEmployeesRequest(int employeeId, int projectId) {
+    public DeliveryEmployeeProject(int employeeId, int projectId) {
         this.employeeId = employeeId;
         this.projectId = projectId;
     }
