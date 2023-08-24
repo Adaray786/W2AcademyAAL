@@ -68,6 +68,23 @@ public class SalesEmployeeController {
         }
     }
 
+    @PUT
+    @Path("/salesemployee/{id}")
+    @Produces(MediaType.APPLICATION_JSON)
+    public Response updateDeliveryEmployee(@PathParam("id") int id, SalesEmployeeRequest request) {
+        try {
+            salesEmployeeService.updateSalesEmployee(id, request);
 
+            return Response.ok().build();
+        } catch (FailedToUpdateSalesEmployeeException e) {
+            e.printStackTrace();
 
+            return Response.serverError().build();
+        } catch (InvalidSalesEmployeeException | SalesEmployeeDoesNotExistException e) {
+            e.printStackTrace();
+
+            return Response.status(Response.Status.BAD_REQUEST).entity(e.getMessage()).build();
+        }
+
+    }
 }
